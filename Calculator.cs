@@ -1,3 +1,5 @@
+using System.Numerics;
+
 namespace N8N_HW1_2;
 
 public static class Calculator
@@ -25,5 +27,22 @@ public static class Calculator
         }
 
         return firstNumber / secondNumber;
+    }
+
+    public static BigInteger Factorial(int number)
+    {
+        if (number < 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(number), "فاکتوریل فقط برای اعداد صحیح نامنفی تعریف شده است.");
+        }
+
+        var result = BigInteger.One;
+
+        for (var i = 2; i <= number; i++)
+        {
+            result *= i;
+        }
+
+        return result;
     }
 }
