@@ -7,7 +7,7 @@ public static class Program
     public static void Main()
     {
         Console.WriteLine("ماشین حساب کنسولی");
-        Console.WriteLine("عملیات را وارد کنید: جمع، تفریق، ضرب، تقسیم یا خروج");
+        Console.WriteLine("عملیات را وارد کنید: جمع، تفریق، ضرب، تقسیم، فاکتوریل یا خروج");
 
         while (true)
         {
@@ -24,10 +24,27 @@ public static class Program
             var isSubtraction = operation is "تفریق" or "تفریق کن" or "subtract" or "sub" or "-";
             var isMultiplication = operation is "ضرب" or "ضرب کن" or "multiply" or "mult" or "*";
             var isDivision = operation is "تقسیم" or "تقسیم کن" or "divide" or "div" or "/";
+            var isFactorial = operation is "فاکتوریل" or "factorial" or "fact" or "!";
+
+            if (isFactorial)
+            {
+                var number = ReadInteger("عدد: ");
+
+                try
+                {
+                    Console.WriteLine($"نتیجه: {Calculator.Factorial(number)}");
+                }
+                catch (ArgumentOutOfRangeException exception)
+                {
+                    Console.WriteLine(exception.Message);
+                }
+
+                continue;
+            }
 
             if (!isAddition && !isSubtraction && !isMultiplication && !isDivision)
             {
-                Console.WriteLine("عملیات نامعتبر است. جمع، تفریق، ضرب، تقسیم یا خروج را وارد کنید.");
+                Console.WriteLine("عملیات نامعتبر است. جمع، تفریق، ضرب، تقسیم، فاکتوریل یا خروج را وارد کنید.");
                 continue;
             }
 
@@ -67,6 +84,23 @@ public static class Program
             }
 
             Console.WriteLine("لطفاً یک عدد معتبر وارد کنید.");
+        }
+    }
+
+    private static int ReadInteger(string prompt)
+    {
+        while (true)
+        {
+            Console.Write(prompt);
+            var input = Console.ReadLine();
+
+            if (int.TryParse(input, NumberStyles.Integer, CultureInfo.CurrentCulture, out var number) ||
+                int.TryParse(input, NumberStyles.Integer, CultureInfo.InvariantCulture, out number))
+            {
+                return number;
+            }
+
+            Console.WriteLine("لطفاً یک عدد صحیح معتبر وارد کنید.");
         }
     }
 }
