@@ -11,4 +11,19 @@ public static class Calculator
     {
         return firstNumber - secondNumber;
     }
+
+    public static double Multiply(double firstNumber, double secondNumber)
+    {
+        return firstNumber * secondNumber;
+    }
+
+    public static double Divide(double firstNumber, double secondNumber)
+    {
+        if (secondNumber == 0)
+        {
+            throw new DivideByZeroException("امکان تقسیم بر صفر وجود ندارد.");
+        }
+
+        return firstNumber / secondNumber;
+    }
 }
