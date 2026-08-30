@@ -6,4 +6,9 @@ public static class Calculator
     {
         return firstNumber + secondNumber;
     }
+
+    public static double Subtract(double firstNumber, double secondNumber)
+    {
+        return firstNumber - secondNumber;
+    }
 }
