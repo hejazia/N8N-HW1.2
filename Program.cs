@@ -7,7 +7,7 @@ public static class Program
     public static void Main()
     {
         Console.WriteLine("ماشین حساب کنسولی");
-        Console.WriteLine("عملیات را وارد کنید: جمع، تفریق یا خروج");
+        Console.WriteLine("عملیات را وارد کنید: جمع، تفریق، ضرب، تقسیم یا خروج");
 
         while (true)
         {
@@ -22,20 +22,34 @@ public static class Program
 
             var isAddition = operation is "جمع" or "جمع کن" or "add" or "+";
             var isSubtraction = operation is "تفریق" or "تفریق کن" or "subtract" or "sub" or "-";
+            var isMultiplication = operation is "ضرب" or "ضرب کن" or "multiply" or "mult" or "*";
+            var isDivision = operation is "تقسیم" or "تقسیم کن" or "divide" or "div" or "/";
 
-            if (!isAddition && !isSubtraction)
+            if (!isAddition && !isSubtraction && !isMultiplication && !isDivision)
             {
-                Console.WriteLine("عملیات نامعتبر است. جمع، تفریق یا خروج را وارد کنید.");
+                Console.WriteLine("عملیات نامعتبر است. جمع، تفریق، ضرب، تقسیم یا خروج را وارد کنید.");
                 continue;
             }
 
             var firstNumber = ReadNumber("عدد اول: ");
             var secondNumber = ReadNumber("عدد دوم: ");
-            var result = isAddition
-                ? Calculator.Add(firstNumber, secondNumber)
-                : Calculator.Subtract(firstNumber, secondNumber);
 
-            Console.WriteLine($"نتیجه: {result}");
+            try
+            {
+                var result = isAddition
+                    ? Calculator.Add(firstNumber, secondNumber)
+                    : isSubtraction
+                        ? Calculator.Subtract(firstNumber, secondNumber)
+                        : isMultiplication
+                            ? Calculator.Multiply(firstNumber, secondNumber)
+                            : Calculator.Divide(firstNumber, secondNumber);
+
+                Console.WriteLine($"نتیجه: {result}");
+            }
+            catch (DivideByZeroException exception)
+            {
+                Console.WriteLine(exception.Message);
+            }
         }
     }
 
